@@ -1,7 +1,11 @@
+// @flow
 import React from 'react'
+import Container from 'react-bootstrap/Container'
 
 const TodoApp = () => (
-    <h1>Hello</h1>
+    <Container>
+        <h1>Todo App</h1>
+    </Container>
 )
 
 export default TodoApp
