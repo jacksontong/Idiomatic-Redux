@@ -9,8 +9,7 @@ const addTodo = (id: Id, text: Text): Todo => ({
     completed: false
 })
 
-const toggleTodo = (id: Id, todos: Todos): Todos => 
-    todos.filter(t => t.id !== id ? t : { ...t, completed: !t.completed })
+const toggleTodo = (id: Id, todos: Todos): Todos => todos.map(t => (t.id !== id ? t : { ...t, completed: !t.completed }))
 
 const todos = (
     state: Todos = [],
