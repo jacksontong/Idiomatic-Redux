@@ -28,3 +28,5 @@ const todos = (
             return state
     }
 }
+
+export default todos

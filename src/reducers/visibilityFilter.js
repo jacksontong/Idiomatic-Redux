@@ -14,3 +14,5 @@ const visibilityFilter = (
             return state
     }
 }
+
+export default visibilityFilter
