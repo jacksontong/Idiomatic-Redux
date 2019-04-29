@@ -7,8 +7,8 @@ import { withRouter } from "react-router-dom"
 
 import type { State } from '../types'
 
-const mapStateToProps = ({ todos }: State, { match }) => ({
-    todos: getVisibleTodos(todos, match.params.filter || 'all')
+const mapStateToProps = (state: State, { match }) => ({
+    todos: getVisibleTodos(state, match.params.filter || 'all')
 })
 
 // const mapDispatchToProps = (dispatch: Dispatch) => ({
