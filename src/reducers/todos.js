@@ -1,31 +1,35 @@
 // @flow
+
+import type { Ids, Todos } from "../types/todos"
+import type { Action } from "../types"
 import { ADD_TODO, TOGGLE_TODO } from "../constants"
-import type { Todos, Id, Text, Todo } from '../types/todos'
-import type { Action } from '../types'
+import todo from './todo'
+import { combineReducers } from "redux"
 
-const addTodo = (id: Id, text: Text): Todo => ({
-    id,
-    text,
-    completed: false
-})
-
-const toggleTodo = (id: Id, todos: Todos): Todos => todos.map(t => (t.id !== id ? t : { ...t, completed: !t.completed }))
-
-const todos = (
-    state: Todos = [],
-    action: Action
-): Todos => {
+const byId = (state: Todos = {}, action: Action): Todos => {
     switch (action.type) {
         case ADD_TODO:
-            return [
-                ...state,
-                addTodo(action.id, action.text)
-            ]
         case TOGGLE_TODO:
-            return toggleTodo(action.id, state)
+            return {
+                ...state,
+                [action.id]: todo(state[action.id], action)
+            }
         default:
             return state
     }
 }
 
-export default todos
+const allIds = (state: Ids = [], action: Action): Ids => {
+    switch (action.type) {
+        case ADD_TODO:
+            return [...state, action.id]
+        default:
+            return state
+    }
+}
+
+
+export default combineReducers({
+    byId,
+    allIds
+})

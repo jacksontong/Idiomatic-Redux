@@ -1,7 +1,9 @@
 // @flow
 import { ADD_TODO, TOGGLE_TODO } from "../constants"
 
-export type Id = number
+export type Id = string
+
+export type Ids = Array<Id>
 
 export type Text = string
 
@@ -11,10 +13,13 @@ export type Todo = {
     +completed: boolean
 }
 
-export type Todos = Array<Todo>
+export type Todos = {
+    [id: string]: Todo
+}
 
 export type TodosState = {
-    +todos: Todos
+    +byId: Todos,
+    +allIds: Ids
 }
 
 export type TodosAction = 

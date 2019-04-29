@@ -1,15 +1,15 @@
 // @flow
 import { createSelector } from "reselect"
-import type { Todos } from "../types/todos"
+import type { Todo } from "../types/todos"
 import type { State } from "../types"
 
-const getState = (state: State) => state
+const getAllTodos = ({ allIds, byId }: State) => allIds.map(id => byId[id])
 
 const getVisibilityFilter = (_, filter) => filter
 
 export const getVisibleTodos = createSelector(
-    [ getState, getVisibilityFilter ],
-    (state: Todos, filter: string) => {
+    [ getAllTodos, getVisibilityFilter ],
+    (state: [Todo], filter: string) => {
         switch (filter) {
             case 'active':
                 return state.filter(t => !t.completed)
