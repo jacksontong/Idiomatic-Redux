@@ -15,13 +15,10 @@ const Todo = ({
     text,
     completed,
     onClick
-}: Props): Node => {
-    console.log(onClick)
-    return (
-        <li className={completed ? 'completed' : ''} onClick={onClick}>
-            {text}
-        </li>
-    )
-}
+}: Props): Node => (
+    <li className={completed ? 'completed' : ''} onClick={onClick}>
+        {text}
+    </li>
+)
 
 export default Todo

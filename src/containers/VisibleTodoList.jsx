@@ -6,8 +6,8 @@ import TodoList from '../components/TodoList'
 
 import type { State } from '../types'
 
-const mapStateToProps = (state: State) => ({
-    todos: getVisibleTodos(state)
+const mapStateToProps = ({ todos }: State, { filter }) => ({
+    todos: getVisibleTodos(todos, filter)
 })
 
 // const mapDispatchToProps = (dispatch: Dispatch) => ({
