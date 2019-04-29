@@ -7,14 +7,25 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducers from './reducers'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { loadState, saveState } from "./localStorage"
+import throttle from 'lodash/throttle'
 
 const element = document.getElementById('root')
 if (!element) {
     throw new Error("element root does not exist")
 }
 
+const initialState = loadState()
+const store = createStore(reducers, initialState)
+
+store.subscribe(throttle(() => {
+    saveState({
+        todos: store.getState().todos
+    })
+}, 1000))
+
 ReactDOM.render(
-    <Provider store={createStore(reducers)}>
+    <Provider store={store}>
         <TodoApp />
     </Provider>, 
     element);
