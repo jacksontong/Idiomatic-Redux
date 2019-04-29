@@ -1,5 +1,4 @@
 // @flow
-import { SHOW_ACTIVE, SHOW_COMPLETED, SHOW_ALL } from "../constants"
 import type { Todos } from '../types/todos'
 
 export default (todos: Todos, filter: string): Todos => {
