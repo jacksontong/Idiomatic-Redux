@@ -2,11 +2,11 @@
 import React from 'react'
 import Todo from './Todo'
 
-import type { Todos, Id } from '../types/todos'
+import type { Todo as TypeTodo, Id } from '../types/todos'
 import type { Node } from 'react'
 
 export type Props = {
-    todos: Todos,
+    todos: TypeTodo[],
     onTodoClick: (Id) => void
 }
 

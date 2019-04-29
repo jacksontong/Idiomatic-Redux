@@ -17,9 +17,13 @@ export type Todos = {
     [id: string]: Todo
 }
 
-export type TodosState = {
+export type TodosById = {
     +byId: Todos,
     +allIds: Ids
+}
+
+export type TodosState = {
+    +todos: TodosById
 }
 
 export type TodosAction = 
