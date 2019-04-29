@@ -3,6 +3,7 @@ import TodoApp from "./TodoApp"
 import { Provider } from "react-redux"
 import React from "react"
 import type { Store } from "../types"
+import { BrowserRouter as Router , Route } from "react-router-dom"
 
 export type Props = {
     store: Store
@@ -10,7 +11,9 @@ export type Props = {
 
 const Root = ({ store }: Props) => (
     <Provider store={store}>
-        <TodoApp/>
+        <Router>
+            <Route path="/" exact component={TodoApp} />
+        </Router>
     </Provider>
 )
 
