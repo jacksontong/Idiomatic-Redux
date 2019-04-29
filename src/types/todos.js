@@ -1,5 +1,5 @@
 // @flow
-import { ADD_TODO, TOGGLE_TODO } from "../constants"
+import { ADD_TODO, RECEIVE_TODOS, TOGGLE_TODO } from "../constants"
 
 export type Id = string
 
@@ -29,3 +29,4 @@ export type TodosState = {
 export type TodosAction = 
     | { type: typeof ADD_TODO, +id: Id, +text: Text }
     | { type: typeof TOGGLE_TODO, +id: Id }
+    | { type: typeof RECEIVE_TODOS, +filter: string, +response: Todo[] }
