@@ -12,7 +12,7 @@ export type Props = {
 const Root = ({ store }: Props) => (
     <Provider store={store}>
         <Router>
-            <Route path="/" exact component={TodoApp} />
+            <Route path="/:filter?" component={TodoApp} />
         </Router>
     </Provider>
 )
