@@ -1,33 +1,20 @@
 // @flow
 import React from 'react'
 import ReactDOM from 'react-dom'
-import TodoApp from './components/TodoApp'
 import * as serviceWorker from './serviceWorker'
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
-import reducers from './reducers'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { loadState, saveState } from "./localStorage"
-import throttle from 'lodash/throttle'
+import configureStore from "./configureStore";
+import Root from "./components/Root"
 
 const element = document.getElementById('root')
 if (!element) {
     throw new Error("element root does not exist")
 }
 
-const initialState = loadState()
-const store = createStore(reducers, initialState)
-
-store.subscribe(throttle(() => {
-    saveState({
-        todos: store.getState().todos
-    })
-}, 1000))
+const store = configureStore()
 
 ReactDOM.render(
-    <Provider store={store}>
-        <TodoApp />
-    </Provider>, 
+    <Root store={store}/>,
     element);
 
 // If you want your app to work offline and load faster, you can change

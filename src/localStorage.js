@@ -1,4 +1,7 @@
-export const loadState = () => {
+// @flow
+import type { State } from "./types"
+
+export const loadState = (): ?State => {
     try {
         const serializedState = localStorage.getItem('state')
         if (!serializedState) {
@@ -10,7 +13,7 @@ export const loadState = () => {
     }
 }
 
-export const saveState = (state) => {
+export const saveState = (state: State) => {
     try {
         const serializedState = JSON.stringify(state)
         localStorage.setItem('state', serializedState)
