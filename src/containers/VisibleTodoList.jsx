@@ -1,6 +1,6 @@
 // @flow
 import { connect } from 'react-redux'
-import getVisibleTodos from '../selectors'
+import { getVisibleTodos } from '../selectors'
 import { toggleTodo } from '../actions/todos'
 import TodoList from '../components/TodoList'
 import { withRouter } from "react-router-dom"
