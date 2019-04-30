@@ -1,7 +1,16 @@
 // @flow
+
 import { combineReducers } from "redux"
-import todos from './todos'
+import byId from './byId'
+import createList from "./createList"
+
+const listByFilter = combineReducers({
+    'all': createList('all'),
+    'active': createList('active'),
+    'completed': createList('completed')
+})
 
 export default combineReducers({
-    todos
+    byId,
+    listByFilter
 })
