@@ -1,18 +1,17 @@
 // @flow
 
-import { FETCH_TODOS_SUCCESS, FETCH_TODOS_REQUEST, FETCH_TODOS_FAIL } from "../constants"
+import { FETCH_TODOS_SUCCESS, FETCH_TODOS_REQUEST, FETCH_TODOS_FAIL, ADD_TODO_SUCCESS } from "../constants"
 import type { Action } from "../types"
 import type { Ids } from "../types/todos"
 import { combineReducers } from "redux"
 
 const createList = (filter: string) => {
     const ids = (state: Ids = [], action: Action): Ids => {
-        if (action.filter !== filter) {
-            return state
-        }
         switch (action.type) {
             case FETCH_TODOS_SUCCESS:
-                return action.response.map(t => t.id)
+                return action.filter === filter ? action.response.map(t => t.id) : state
+            case ADD_TODO_SUCCESS:
+                return filter !== 'completed' ? [ ...state, action.response.id ] : state
             default:
                 return state
         }

@@ -2,7 +2,7 @@
 
 import type { Todos } from "../types/todos"
 import type { Action } from "../types"
-import { FETCH_TODOS_SUCCESS } from "../constants"
+import { ADD_TODO_SUCCESS, FETCH_TODOS_SUCCESS } from "../constants"
 
 const byId = (state: Todos = {}, action: Action): Todos => {
     switch (action.type) {
@@ -12,6 +12,11 @@ const byId = (state: Todos = {}, action: Action): Todos => {
                 nextState[t.id] = t
             })
             return nextState
+        case ADD_TODO_SUCCESS:
+            return {
+                ...state,
+                [action.response.id]: action.response
+            }
         default:
             return state
     }

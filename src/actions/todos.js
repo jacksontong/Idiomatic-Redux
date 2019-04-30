@@ -1,31 +1,33 @@
 // @flow
-import { ADD_TODO, FETCH_TODOS_SUCCESS, FETCH_TODOS_REQUEST, TOGGLE_TODO, FETCH_TODOS_FAIL } from "../constants"
-import type { Id, Text, Todo, TodosAction } from '../types/todos'
-import { v4 } from 'node-uuid'
-import { fetchTodos as apiFetchTodos } from "../api"
+import { ADD_TODO_SUCCESS, FETCH_TODOS_SUCCESS, FETCH_TODOS_REQUEST, TOGGLE_TODO, FETCH_TODOS_FAIL } from "../constants"
+import type { Filter, Id, Text, TodosAction } from '../types/todos'
+import * as fromApi from "../api"
 import type { Dispatch } from "../types"
+import type { Todos } from "../types/api"
 
-export const addTodo = (text: Text): TodosAction => ({
-    type: ADD_TODO,
-    id: v4(),
-    text
-})
+export const addTodo = (text: Text) => async (dispatch: Dispatch) => {
+    const response = await fromApi.addTodo(text)
+    dispatch({
+        type: ADD_TODO_SUCCESS,
+        response
+    })
+}
 
 export const toggleTodo = (id: Id): TodosAction => ({
     type: TOGGLE_TODO,
     id
 })
 
-export const receiveTodos = (filter: string, response: Todo[]): TodosAction => ({
+export const receiveTodos = (filter: string, response: Todos): TodosAction => ({
     type: FETCH_TODOS_SUCCESS,
     filter,
     response
 })
 
-export const fetchTodos = (filter: string) => async (dispatch: Dispatch) => {
+export const fetchTodos = (filter: Filter) => async (dispatch: Dispatch) => {
     dispatch({type: FETCH_TODOS_REQUEST, filter})
     try {
-        const todos = await apiFetchTodos(filter)
+        const todos = await fromApi.fetchTodos(filter)
         dispatch(receiveTodos(filter, todos))
     } catch (error) {
         dispatch({
