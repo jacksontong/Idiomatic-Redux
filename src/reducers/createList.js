@@ -1,6 +1,6 @@
 // @flow
 
-import { RECEIVE_TODOS, REQUEST_TODOS } from "../constants"
+import { FETCH_TODOS_SUCCESS, FETCH_TODOS_REQUEST, FETCH_TODOS_FAIL } from "../constants"
 import type { Action } from "../types"
 import type { Ids } from "../types/todos"
 import { combineReducers } from "redux"
@@ -11,7 +11,7 @@ const createList = (filter: string) => {
             return state
         }
         switch (action.type) {
-            case RECEIVE_TODOS:
+            case FETCH_TODOS_SUCCESS:
                 return action.response.map(t => t.id)
             default:
                 return state
@@ -23,10 +23,26 @@ const createList = (filter: string) => {
             return state
         }
         switch (action.type) {
-            case REQUEST_TODOS:
+            case FETCH_TODOS_REQUEST:
                 return true
-            case RECEIVE_TODOS:
+            case FETCH_TODOS_FAIL:
+            case FETCH_TODOS_SUCCESS:
                 return false
+            default:
+                return state
+        }
+    }
+
+    const errorMessage = (state: ?string = null, action: Action): ?string => {
+        if (action.filter !== filter) {
+            return state
+        }
+        switch (action.type) {
+            case FETCH_TODOS_FAIL:
+                return action.message
+            case FETCH_TODOS_REQUEST:
+            case FETCH_TODOS_SUCCESS:
+                return null
             default:
                 return state
         }
@@ -34,7 +50,8 @@ const createList = (filter: string) => {
 
     return combineReducers({
         ids,
-        isFetching
+        isFetching,
+        errorMessage
     })
 }
 

@@ -14,3 +14,5 @@ export const getVisibleTodos = ({ listByFilter, byId }: State, filter: Filter): 
 export const getIsFetching = ({ listByFilter }: State, filter: Filter): boolean => {
     return listByFilter[filter].isFetching
 }
+
+export const getErrorMessage = ({ listByFilter }: State, filter: Filter) => listByFilter[filter].errorMessage

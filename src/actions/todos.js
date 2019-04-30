@@ -1,5 +1,5 @@
 // @flow
-import { ADD_TODO, RECEIVE_TODOS, REQUEST_TODOS, TOGGLE_TODO } from "../constants"
+import { ADD_TODO, FETCH_TODOS_SUCCESS, FETCH_TODOS_REQUEST, TOGGLE_TODO, FETCH_TODOS_FAIL } from "../constants"
 import type { Id, Text, Todo, TodosAction } from '../types/todos'
 import { v4 } from 'node-uuid'
 import { fetchTodos as apiFetchTodos } from "../api"
@@ -17,13 +17,21 @@ export const toggleTodo = (id: Id): TodosAction => ({
 })
 
 export const receiveTodos = (filter: string, response: Todo[]): TodosAction => ({
-    type: RECEIVE_TODOS,
+    type: FETCH_TODOS_SUCCESS,
     filter,
     response
 })
 
 export const fetchTodos = (filter: string) => async (dispatch: Dispatch) => {
-    dispatch({type: REQUEST_TODOS, filter})
-    const todos = await apiFetchTodos(filter)
-    dispatch(receiveTodos(filter, todos))
+    dispatch({type: FETCH_TODOS_REQUEST, filter})
+    try {
+        const todos = await apiFetchTodos(filter)
+        dispatch(receiveTodos(filter, todos))
+    } catch (error) {
+        dispatch({
+            type: FETCH_TODOS_FAIL,
+            message: error.message || "something went wrong",
+            filter
+        })
+    }
 }

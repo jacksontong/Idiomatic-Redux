@@ -2,11 +2,11 @@
 
 import type { Todos } from "../types/todos"
 import type { Action } from "../types"
-import { RECEIVE_TODOS } from "../constants"
+import { FETCH_TODOS_SUCCESS } from "../constants"
 
 const byId = (state: Todos = {}, action: Action): Todos => {
     switch (action.type) {
-        case RECEIVE_TODOS:
+        case FETCH_TODOS_SUCCESS:
             const nextState = { ...state }
             action.response.forEach(t => {
                 nextState[t.id] = t

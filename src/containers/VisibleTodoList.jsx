@@ -1,41 +1,50 @@
 // @flow
 import React, { Component } from "react"
 import { connect } from 'react-redux'
-import { getIsFetching, getVisibleTodos } from '../selectors'
+import { getErrorMessage, getIsFetching, getVisibleTodos } from '../selectors'
 import { toggleTodo, fetchTodos } from '../actions/todos'
 import TodoList from '../components/TodoList'
 import { withRouter } from "react-router-dom"
 
 import type { State } from '../types'
-import type { Filter, Todo } from "../types/todos"
+import type { Filter } from "../types/todos"
+import type { Props as TodoListProps } from '../components/TodoList'
+import FetchError from "../components/FetchError"
 
-export type Props = {
-    todos: Todo[],
-    onTodoClick: () => void,
+export type Props = TodoListProps & {
     fetchTodos: typeof fetchTodos,
     isFetching: boolean,
     filter: Filter,
+    errorMessage: string
 }
 
 class VisibleTodoList extends Component<Props> {
 
     componentDidMount() {
+        this.fetchData()
+    }
+
+    componentDidUpdate({ filter: prevFilter }: Props) {
+        const { filter } = this.props
+        if (filter !== prevFilter) {
+            this.fetchData()
+        }
+    }
+
+    fetchData() {
         const { filter, fetchTodos } = this.props
         fetchTodos(filter)
     }
 
-    componentDidUpdate({ filter: prevFilter }: Props) {
-        const { filter, fetchTodos } = this.props
-        if (filter !== prevFilter) {
-            fetchTodos(filter)
-        }
-    }
-
     render() {
-        const { isFetching, todos, onTodoClick } = this.props
+        const { isFetching, todos, onTodoClick, errorMessage } = this.props
 
         if (isFetching && !todos.length) {
             return <p>loading...</p>
+        }
+
+        if (errorMessage && !todos.length) {
+            return <FetchError message={errorMessage} onRetry={() => this.fetchData()}/>
         }
 
         return (
@@ -52,6 +61,7 @@ const mapStateToProps = (state: State, { match }) => {
     return {
         todos: getVisibleTodos(state, filter),
         isFetching: getIsFetching(state, filter),
+        errorMessage: getErrorMessage(state, filter),
         filter
     }
 }

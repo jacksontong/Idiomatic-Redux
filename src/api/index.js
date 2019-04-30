@@ -25,6 +25,11 @@ const fakeDatabase = {
 
 export const fetchTodos = async (filter: string) => {
     await delay(500)
+
+    if (Math.random() > 0.5) {
+        throw new Error("Boom")
+    }
+    
     switch (filter) {
         case 'all':
             return fakeDatabase.todos
