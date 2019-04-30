@@ -1,5 +1,5 @@
 // @flow
-import { RECEIVE_TODOS } from "../constants"
+import { RECEIVE_TODOS, REQUEST_TODOS } from "../constants"
 
 export type Id = string
 
@@ -13,17 +13,24 @@ export type Todo = {
     +completed: boolean
 }
 
+export type ListId = {
+    +ids: Ids,
+    +isFetching: boolean
+}
+
 export type Todos = {
     [id: string]: Todo
 }
 
+export type Filter = "all" | "active" | "completed"
+
 export type TodosState = {
     +byId: Todos,
     +listByFilter: {
-        +all: Ids,
-        +active: Ids,
-        +completed: Ids
+        +[Filter]: ListId
     }
 }
 
-export type TodosAction = { type: typeof RECEIVE_TODOS, +filter: string, +response: Todo[] }
+export type TodosAction =
+    | { type: typeof RECEIVE_TODOS, +filter: string, +response: Todo[] }
+    | { type: typeof REQUEST_TODOS, +filter: string }

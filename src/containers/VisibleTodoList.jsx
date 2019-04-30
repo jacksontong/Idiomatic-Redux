@@ -1,18 +1,20 @@
 // @flow
 import React, { Component } from "react"
 import { connect } from 'react-redux'
-import { getVisibleTodos } from '../selectors'
+import { getIsFetching, getVisibleTodos } from '../selectors'
 import { toggleTodo, fetchTodos } from '../actions/todos'
 import TodoList from '../components/TodoList'
 import { withRouter } from "react-router-dom"
 
 import type { State } from '../types'
-import type { Props as TodoListProps } from '../components/TodoList'
+import type { Filter, Todo } from "../types/todos"
 
 export type Props = {
-    ...TodoListProps,
+    todos: Todo[],
+    onTodoClick: () => void,
     fetchTodos: typeof fetchTodos,
-    filter: string,
+    isFetching: boolean,
+    filter: Filter,
 }
 
 class VisibleTodoList extends Component<Props> {
@@ -30,16 +32,26 @@ class VisibleTodoList extends Component<Props> {
     }
 
     render() {
+        const { isFetching, todos, onTodoClick } = this.props
+
+        if (isFetching && !todos.length) {
+            return <p>loading...</p>
+        }
+
         return (
-            <TodoList {...this.props}/>
+            <TodoList
+                todos={todos}
+                onTodoClick={onTodoClick}
+            />
         )
     }
 }
 
 const mapStateToProps = (state: State, { match }) => {
-    const filter = match.params.filter || 'all'
+    const filter: Filter = match.params.filter || 'all'
     return {
         todos: getVisibleTodos(state, filter),
+        isFetching: getIsFetching(state, filter),
         filter
     }
 }
