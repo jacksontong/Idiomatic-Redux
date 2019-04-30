@@ -1,9 +1,13 @@
+// @flow
 import { v4 } from 'node-uuid'
+import type { Filter, Todo } from "../types/todos"
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 
-const fakeDatabase = {
+const fakeDatabase: {
+    todos: Todo[]
+} = {
     todos: [{
         id: v4(),
         text: "hey",
@@ -23,20 +27,20 @@ const fakeDatabase = {
     }]
 }
 
-export const fetchTodos = async (filter: string) => {
+export const fetchTodos = async (filter: Filter) => {
     await delay(500)
 
-    if (Math.random() > 0.5) {
-        throw new Error("Boom")
-    }
-    
+    // if (Math.random() > 0.5) {
+    //     throw new Error("Boom")
+    // }
+
     switch (filter) {
         case 'all':
-            return fakeDatabase.todos
+            return Promise.resolve(fakeDatabase.todos)
         case 'active':
-            return fakeDatabase.todos.filter(t => !t.completed)
+            return Promise.resolve<Todo[]>(fakeDatabase.todos.filter(t => !t.completed))
         case 'completed':
-            return fakeDatabase.todos.filter(t => t.completed)
+            return Promise.resolve<Todo[]>(fakeDatabase.todos.filter(t => t.completed))
         default:
             throw new Error(`Unknow filter: ${filter}`)
     }
