@@ -1,6 +1,6 @@
 // @flow
 
-import type { TodoRequestActions, Todos } from "../types/todos"
+import type { Id, TodoRequestActions, Todos } from "../types/todos"
 
 const byId = (state: Todos = {}, action: TodoRequestActions): Todos => {
     if (action.response) {
@@ -13,3 +13,5 @@ const byId = (state: Todos = {}, action: TodoRequestActions): Todos => {
 }
 
 export default byId
+
+export const getTodo = (state: Todos, id: Id) => state[id]

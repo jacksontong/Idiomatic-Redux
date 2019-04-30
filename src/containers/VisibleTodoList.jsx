@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from "react"
 import { connect } from 'react-redux'
-import { getErrorMessage, getIsFetching, getVisibleTodos } from '../selectors'
+import { getErrorMessage, getIsFetching, getVisibleTodos } from '../reducers'
 import { toggleTodo, fetchTodos } from '../actions/todos'
 import TodoList from '../components/TodoList'
 import { withRouter } from "react-router-dom"

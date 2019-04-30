@@ -8,7 +8,7 @@ import {
     TOGGLE_TODO_SUCCESS
 } from "../constants"
 import type { Action } from "../types"
-import type { Ids, ToggleTodoSuccessAction } from "../types/todos"
+import type { Ids, ListId, ToggleTodoSuccessAction } from "../types/todos"
 import { combineReducers } from "redux"
 
 const createList = (filter: string) => {
@@ -76,3 +76,7 @@ const createList = (filter: string) => {
 }
 
 export default createList
+
+export const getErrorMessage = (state: ListId) => state.errorMessage
+export const getIsFetching = (state: ListId) => state.isFetching
+export const getIds = (state: ListId) => state.ids
