@@ -1,6 +1,6 @@
 // @flow
 import { v4 } from 'node-uuid'
-import type { Filter, Id, Text } from "../types/todos"
+import type { Filter, Id } from "../types/todos"
 import type { Todos, Todo } from "../types/api"
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))

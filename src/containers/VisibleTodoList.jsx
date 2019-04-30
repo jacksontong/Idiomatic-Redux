@@ -38,6 +38,7 @@ class VisibleTodoList extends Component<Props> {
 
     render() {
         const { isFetching, todos, onTodoClick, errorMessage } = this.props
+        console.log(todos)
 
         if (isFetching && !todos.length) {
             return <p>loading...</p>
