@@ -2,6 +2,8 @@
 import { ADD_TODO, RECEIVE_TODOS, TOGGLE_TODO } from "../constants"
 import type { Id, Text, Todo, TodosAction } from '../types/todos'
 import { v4 } from 'node-uuid'
+import { fetchTodos as apiFetchTodos } from "../api"
+import type { Dispatch } from "../types"
 
 export const addTodo = (text: Text): TodosAction => ({
     type: ADD_TODO,
@@ -19,3 +21,8 @@ export const receiveTodos = (filter: string, response: Todo[]): TodosAction => (
     filter,
     response
 })
+
+export const fetchTodos = (filter: string) => async (dispatch: Dispatch) => {
+    const todos = await apiFetchTodos(filter)
+    dispatch(receiveTodos(filter, todos))
+}

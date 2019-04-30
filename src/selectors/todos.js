@@ -1,6 +1,6 @@
 // @flow
 import { createSelector } from "reselect"
-import type { Todo, TodosById } from "../types/todos"
+import type { TodosById } from "../types/todos"
 
 const getAllIds = (state: TodosById) => state
 
