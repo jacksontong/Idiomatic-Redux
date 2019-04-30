@@ -19,14 +19,15 @@ export type Todos = {
 
 export type TodosById = {
     +byId: Todos,
-    +allIds: Ids
+    +idsByFilter: {
+        +all: Ids,
+        +active: Ids,
+        +completed: Ids
+    }
 }
 
 export type TodosState = {
     +todos: TodosById
 }
 
-export type TodosAction = 
-    | { type: typeof ADD_TODO, +id: Id, +text: Text }
-    | { type: typeof TOGGLE_TODO, +id: Id }
-    | { type: typeof RECEIVE_TODOS, +filter: string, +response: Todo[] }
+export type TodosAction = { type: typeof RECEIVE_TODOS, +filter: string, +response: Todo[] }
