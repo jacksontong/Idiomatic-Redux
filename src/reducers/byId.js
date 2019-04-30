@@ -1,14 +1,12 @@
 // @flow
 
-import type { Todos } from "../types/todos"
-import type { Action } from "../types"
-import _ from 'lodash'
+import type { TodoRequestActions, Todos } from "../types/todos"
 
-const byId = (state: Todos = {}, action: Action): Todos => {
+const byId = (state: Todos = {}, action: TodoRequestActions): Todos => {
     if (action.response) {
         return {
             ...state,
-            ..._.get(action.response, 'entities.todos')
+            ...action.response.entities.todos
         }
     }
     return state

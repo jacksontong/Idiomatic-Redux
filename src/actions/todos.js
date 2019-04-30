@@ -24,7 +24,7 @@ export const toggleTodo = (id: Id) => async (dispatch: Dispatch) => {
     const response = await fromApi.toggleTodo(id)
     dispatch({
         type: TOGGLE_TODO_SUCCESS,
-        response
+        response: normalize(response, fromSchema.todo)
     })
 }
 

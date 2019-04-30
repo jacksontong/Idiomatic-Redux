@@ -1,5 +1,11 @@
 // @flow
-import { FETCH_TODOS_SUCCESS, FETCH_TODOS_REQUEST, FETCH_TODOS_FAIL, ADD_TODO_SUCCESS } from "../constants"
+import {
+    FETCH_TODOS_SUCCESS,
+    FETCH_TODOS_REQUEST,
+    FETCH_TODOS_FAIL,
+    ADD_TODO_SUCCESS,
+    TOGGLE_TODO_SUCCESS
+} from "../constants"
 
 export type Id = string
 
@@ -46,8 +52,28 @@ export type TodosResponse = {
     }
 }
 
+export type ToggleTodoSuccessAction = {
+    type: typeof TOGGLE_TODO_SUCCESS,
+    +response: TodoResponse
+}
+
+export type FetchTodoSuccessAction = {
+    type: typeof FETCH_TODOS_SUCCESS,
+    +filter: string,
+    +response: TodosResponse
+}
+
+export type AddTodoSuccessAction = {
+    type: typeof ADD_TODO_SUCCESS,
+    +response: TodoResponse
+}
+
+export type TodoRequestActions =
+    | FetchTodoSuccessAction
+    | AddTodoSuccessAction
+    | ToggleTodoSuccessAction
+
 export type TodosAction =
-    | { type: typeof FETCH_TODOS_SUCCESS, +filter: string, +response: TodosResponse }
+    | TodoRequestActions
     | { type: typeof FETCH_TODOS_REQUEST, +filter: string }
     | { type: typeof FETCH_TODOS_FAIL, +filter: string, +message: string }
-    | { type: typeof ADD_TODO_SUCCESS, +response: TodoResponse }
